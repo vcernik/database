@@ -98,7 +98,11 @@ final class DatabasePresenter extends Nette\Application\UI\Presenter
 
             $policy = Latte\Sandbox\SecurityPolicy::createSafePolicy();
             $policy->allowMethods(Nette\Database\Explorer::class, $policy::ALL);
+            $policy->allowMethods(Nette\Database\Connection::class, $policy::ALL);
+            $policy->allowMethods(Nette\Database\Table\ActiveRow::class, $policy::ALL);
             $policy->allowProperties(Nette\Database\Table\ActiveRow::class, $policy::ALL);
+            $policy->allowProperties(Nette\Database\Row::class, $policy::ALL);
+
 
             $latte->setPolicy($policy);
             $latte->setSandboxMode();
@@ -106,7 +110,7 @@ final class DatabasePresenter extends Nette\Application\UI\Presenter
                     
             $latte->setLoader(new Latte\Loaders\StringLoader);
 
-            $params = ['explorer' => $explorer];
+            $params = ['explorer' => $explorer,'db'=>$connection,'database'=>$connection];
 
             if($code==null){
                 return '<p><em>V editoru vpravo můžete psát kód. Po uložení se zobrazí na tomto místě.</em></p>';

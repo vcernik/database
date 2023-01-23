@@ -1,0 +1,51 @@
+{block title}Příklady kódu – databáze "{$database->name}"{/block}
+{block content}
+<h1>Příklady kódu pro prezentování dat</h1>
+<p>Příklady si ukážeme na jednoduché <strong>databázi článků</strong> na webu – každý článek je zařazen právě do jedné <strong>kategorie</strong> (vazba je 1:N) a může mít více <strong>autorů</strong> (a jeden autor může napsat více článků, takže jde o vazbu M:N).</p>
+<img src="/im/articles.png">
+
+<h4>Výpis názvů článků:</h4>
+<pre><code class="language-latte" n:syntax="off">{foreach $explorer->table('article') as $article}
+    &lt;h1&gt;{$article->title}&lt;/h1&gt;
+{/foreach}</code></pre>
+<p style="margin-bottom:0">Alternativně pomocí SQL:</p>
+<pre><code class="language-latte" n:syntax="off">{foreach $db->query('SELECT title FROM article') as $article}
+    &lt;h1&gt;{$article->title}&lt;/h1&gt;
+{/foreach}</code></pre>
+
+
+<h4>Výpis názvů článků a názvu kategorie (vazba 1:N):</h4>
+<pre><code class="language-latte" n:syntax="off">{foreach $explorer->table('article') as $article}
+    &lt;h1&gt;{$article->title}&lt;/h1&gt;
+    &lt;p&gt;Kategorie: {$article->category->title}&lt;/p&gt;
+{/foreach}</code></pre>
+<p style="margin-bottom:0">Alternativně pomocí SQL:</p>
+<pre><code class="language-latte" n:syntax="off">{foreach $db->query('SELECT article.title, category.title as category_title FROM article INNER JOIN category ON category.id=article.category_id') as $article}
+    &lt;h1&gt;{$article->title}&lt;/h1&gt;
+    &lt;p&gt;Kategorie: {$article->category_title}&lt;/p&gt;
+{/foreach}</code></pre>
+
+
+<h4>Výpis názvů článků a jmen autorů (M:N):</h4>
+<p style="margin-bottom:0">V případě více autorů budou jejich jména oddělena lomítkem – to je onen tag <code n:syntax="off" class="language-latte" >{sep}/{/sep}</code>.</p>
+<pre><code class="language-latte" n:syntax="off">{foreach $explorer->table('article') as $article}
+    &lt;h1&gt;{$article->title}&lt;/h1&gt;
+    &lt;p>Autor: 
+        {foreach $article->related('article_author') as $rel}
+            {$rel->author->firstname} {$rel->author->lastname}
+            {sep}/{/sep} 
+        {/foreach}
+    &lt;/p>
+{/foreach}</code></pre>
+
+
+
+
+<link rel="stylesheet" href="/assets/prism/prism.css"/>
+<script src="/assets/prism/prism.js"></script>
+
+<style>
+h4{
+    margin-top:1rem
+}
+</style>
