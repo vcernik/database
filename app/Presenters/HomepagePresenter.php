@@ -44,6 +44,7 @@ final class HomepagePresenter extends Nette\Application\UI\Presenter
         }
 
         $this['copyDatabaseForm']['parent']->setDefaultValue($db->share);
+        $this['copyDatabaseForm']['name']->setDefaultValue($db->name.' - kopie');
         $this->template->database_parent=$db;
     }
 
@@ -78,5 +79,7 @@ final class HomepagePresenter extends Nette\Application\UI\Presenter
         };
 		return $form;
 	}
+
+
 
 }

@@ -17,6 +17,7 @@ final class RouterFactory
 		$router = new RouteList;
         $router->addRoute('db/<guid>/<action>', 'Database:default');
         $router->addRoute('share/<share>', 'Homepage:share');
+        $router->addRoute('<action>', 'Homepage:default');
 		$router->addRoute('<presenter>/<action>[/<id>]', 'Homepage:default');
 		return $router;
 	}
