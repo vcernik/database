@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/style.css" >
+	<title>{ifset title}{include title|stripHtml} | {/ifset}Relační databáze</title>
+
+    <style>
+        html{
+            height:100%;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            height:100%;
+        }
+        iframe {
+            width:100%;
+            border:0
+        }
+    </style>
+
+</head>
+
+<body>
+<header id="header">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="{link default}">Relační databáze</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+    {if isset($database)}
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item {ifCurrent default}active{/ifCurrent}">
+          <a class="nav-link" href="{link default}">Databáze "{$database->name}"</a>
+        </li>
+        <li class="nav-item {ifCurrent schema}active{/ifCurrent}">
+          <a class="nav-link" href="{link schema}">Schéma</a>
+        </li>
+        <li class="nav-item {ifCurrent show}active{/ifCurrent}">
+          <a class="nav-link" href="{link show}">Prezentace dat</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav mt-2 mt-md-0">
+        
+        <li class="nav-item {ifCurrent tools}active{/ifCurrent}">
+          <a class="nav-link" href="{link tools}">Nástroje</a>
+        </li>
+      </ul>
+    {/if}
+      
+    </div>
+  </nav>
+</header>
+<main role="main">
+
+{if !isset($nomargin) or !$nomargin}
+<div class="container-fluid" style="margin-top:1rem">
+{/if}
+
+{foreach $flashes as $flash}
+	<p class="alert alert-{$flash->type}">{$flash->message}</p>
+{/foreach}
+
+	{include content}
+
+{if !isset($nomargin) or !$nomargin}
+</div>
+{/if}
+
+</main>
+
+	<script src="https://nette.github.io/resources/js/3/netteForms.min.js"></script>
+    <script src="/assets/script.js"></script>
+</body>
+</html>

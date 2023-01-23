@@ -1,0 +1,38 @@
+{block content}
+
+<div class="box box--left" id="left">
+{snippet content}
+	{if isset($content)}{$content|noescape}{/if}
+{/snippet}
+</div>
+<div class="box box--right" id="right">
+
+    <div id="editor"></div>
+
+{control saveCodeForm}
+<p>Využívá <a href="https://latte.nette.org/cs/syntax">Latte</a> syntaxi, pro práci s databází se využívá <a href="https://doc.nette.org/cs/database/explorer">Nette Database Explorer</a>.</p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.14.0/ace.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.14.0/mode-latte.min.js" integrity="sha512-vgZI9h/96qOpzXsnp7yi0XpFxyOvm5Zjiu+tNCAgbobc+8+DS2qsPfAjEXend7GITeqOBYeG1DVWpfSjdLVELg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.14.0/theme-tomorrow.min.js" integrity="sha512-6SmWm20xesJfN7309JPgy6uWn7KlzS+nm2SkZH3k8HQaulUZoEEGOAkHm9WLFT0srcHGYA4eaBJrbQ/utgTqLw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://unpkg.com/naja@2/dist/Naja.min.js"></script>
+
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/tomorrow");
+    editor.session.setMode("ace/mode/latte");
+
+    
+    editor.setValue(document.getElementById('frm-saveCodeForm-code').value);
+    
+
+    //on click button
+    document.getElementById('frm-saveCodeForm-submit').addEventListener('click', function(e){
+        e.preventDefault();
+        document.getElementById('frm-saveCodeForm-code').value = editor.getValue();
+    });
+
+
+    naja.initialize();
+</script>
