@@ -2,3 +2,4 @@ vendor/*
 temp/*
 _DB/created/*
 config/local.neon
+!.htaccess
